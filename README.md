@@ -30,7 +30,7 @@
 ## التشغيل السريع
 
 ```bash
-git clone https://github.com/Badr1Alanzi/novadl.git
+git clone https://github.com/B5d2z/novadl.git
 cd novadl
 python run.py
 ```
@@ -122,4 +122,4 @@ MIT — راجع [LICENSE](LICENSE).
 
 ## المطور
 
-**B5t Alanzi** — [GitHub](https://github.com/Badr1Alanzi) | [X](https://x.com/B5d2z)
+**B5t Alanzi** — [GitHub](https://github.com/B5d2z) | [X](https://x.com/B5d2z)
