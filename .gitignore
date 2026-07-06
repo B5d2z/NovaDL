@@ -44,6 +44,10 @@ cookies.txt
 # Downloads
 downloads/
 
+# Environment
+.env
+.env.*
+
 # OS
 Thumbs.db
 Desktop.ini
