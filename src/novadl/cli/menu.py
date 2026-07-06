@@ -31,7 +31,7 @@ def _get_download_dir() -> Path:
     saved = _config.get("output_dir")
     if saved:
         return Path(saved)
-    return Path.home() / "Downloads" / "NovaDL"
+    return Path.home() / "Videos" / "NovaDL"
 
 
 def _set_download_dir(path: str) -> None:
@@ -167,7 +167,7 @@ def run() -> None:
     show_welcome = True
     while True:
         if show_welcome:
-            console.print(Panel(f"[bold cyan]{APP_NAME} v{APP_VERSION}[/bold cyan]\nA powerful CLI downloader for video and audio", border_style="cyan"))
+            console.print(Panel(f"[bold cyan]{APP_NAME} v{APP_VERSION}[/bold cyan]\nDownload video & audio from YouTube, TikTok, Instagram, and 1000+ sites.\n[dim]Developer: {APP_AUTHOR} | X: {APP_X} | GitHub: {APP_GITHUB}[/dim]", border_style="cyan"))
             show_welcome = False
 
         path = _get_download_dir()

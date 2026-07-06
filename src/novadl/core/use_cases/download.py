@@ -45,7 +45,7 @@ class DownloadUseCase:
     ) -> DownloadResult:
         if output_dir is None:
             output_dir_str = self._config.get("output_dir")
-            output_dir = Path(output_dir_str) if output_dir_str else Path.home() / "Downloads" / "NovaDL"
+            output_dir = Path(output_dir_str) if output_dir_str else Path.home() / "Videos" / "NovaDL"
         output_dir = output_dir.resolve()
         output_dir.mkdir(parents=True, exist_ok=True)
 

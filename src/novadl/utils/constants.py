@@ -10,7 +10,7 @@ CONFIG_DIR = Path.home() / ".config" / "novadl"
 CONFIG_FILE = CONFIG_DIR / "config.toml"
 HISTORY_FILE = CONFIG_DIR / "history.json"
 LOG_FILE = CONFIG_DIR / "novadl.log"
-DEFAULT_DOWNLOAD_DIR = Path.home() / "Downloads" / "NovaDL"
+DEFAULT_DOWNLOAD_DIR = Path.home() / "Videos" / "NovaDL"
 
 SUPPORTED_SITES_NOTE = (
     "All sites supported by yt-dlp, including YouTube, TikTok, Instagram, "

@@ -163,7 +163,7 @@ python run.py config output_dir "~/Videos/NovaDL"
 
 | المفتاح | الوصف | القيمة الافتراضية |
 |---------|-------|-------------------|
-| `output_dir` | مسار الحفظ الافتراضي | `~/Downloads/NovaDL` |
+| `output_dir` | مسار الحفظ الافتراضي | `~/Videos/NovaDL` |
 | `proxy` | رابط البروكسي الافتراضي | — |
 | `cookies` | مسار ملف الكوكيز الافتراضي | — |
 | `audio_format` | صيغة الصوت الافتراضية | `mp3` |
