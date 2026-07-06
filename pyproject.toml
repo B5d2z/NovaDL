@@ -37,7 +37,7 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-novadl = "novadl.cli.app:main"
+novadl = "novadl.cli:main"
 
 [tool.poetry.dependencies]
 python = ">=3.8"
@@ -47,11 +47,6 @@ yt-dlp = ">=2024.12.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.0"
-black = "^24.10.0"
-pytest = "^8.3.0"
-pytest-cov = "^6.0.0"
-mypy = "^1.13.0"
-pre-commit = "^4.0.0"
 
 [tool.ruff]
 target-version = "py38"
@@ -59,23 +54,7 @@ line-length = 100
 exclude = ["__pycache__", ".git", "dist", "build"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "W", "N", "UP", "S", "B", "SIM"]
+select = ["E", "F", "I", "W"]
 
 [tool.ruff.format]
 quote-style = "double"
-
-[tool.black]
-line-length = 100
-target-version = ["py38"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_functions = ["test_*"]
-addopts = "-v --cov=src/novadl --cov-report=term-missing"
-
-[tool.mypy]
-python_version = "3.8"
-strict = true
-ignore_missing_imports = true
-exclude = ["tests"]

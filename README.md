@@ -1,38 +1,33 @@
 # NovaDL
 
-أداة تحميل فيديوهات وصوت من الإنترنت تعمل من سطر الأوامر. تدعم YouTube، TikTok، Instagram، Facebook، X (Twitter)، Vimeo، Reddit، Twitch، SoundCloud، ومئات المواقع الأخرى.
+Download video & audio from YouTube, TikTok, Instagram, Facebook, X (Twitter), Vimeo, Reddit, Twitch, SoundCloud, and 1000+ sites — right from your terminal.
 
-مبنية على [yt-dlp](https://github.com/yt-dlp/yt-dlp) بهيكل نظيف وقابل للتوسع.
+Built on [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
-## المميزات
+## Features
 
-- **تحميل الفيديو** — من جميع المواقع التي يدعمها yt-dlp
-- **استخراج الصوت** — بصيغ MP3، M4A، Opus، FLAC، WAV
-- **اختيار الجودة** — أفضل جودة، 1080p، 720p، 480p، 360p، أسوأ جودة
-- **اختيار الصيغة** — mp4، mkv، webm، إلخ
-- **قائمة تشغيل** — تحميل قوائم تشغيل كاملة
-- **ترجمة** — تحميل ودمج الترجمة داخل الفيديو
-- **صورة مصغرة** — تحميل ودمج الصورة المصغرة
-- **معلومات الوسائط** — عرض معلومات وتفاصيل الفيديو
-- **استكمال التحميل** — عند انقطاع الاتصال
-- **تحميل دفعة واحدة** — عدة روابط من ملف
-- **الكوكيز** — استخدام ملفات الكوكيز للتحميل من حسابات خاصة
-- **بروكسي** — توجيه التحميل عبر بروكسي
-- **إعدادات** — حفظ الإعدادات بشكل دائم
-- **سجل التحميل** — تتبع التحميلات السابقة
-- **تحديث yt-dlp** — تحديث محرك التحميل مباشرة من الأداة
-- **فحص FFmpeg** — التحقق من وجود FFmpeg وإرشادك لتثبيته
-- **واجهة تفاعلية** — قائمة اختيار بالأرقام
-- **شريط تقدم** — نسبة التحميل، السرعة، الوقت المتبقي، حجم الملف
+- **Video & Audio** — Download from any site yt-dlp supports
+- **Audio extraction** — MP3, M4A, Opus, FLAC, WAV
+- **Quality selection** — Best, 1080p, 720p, 480p, 360p, Worst
+- **Playlist support** — Download entire channels and playlists
+- **Subtitles** — Download and embed subtitles
+- **Thumbnails** — Download thumbnail images
+- **Resume** — Continue interrupted downloads
+- **Cookies** — Authenticated downloads via cookies file
+- **Proxy** — Route through a proxy
+- **History** — Track past downloads
+- **Config** — Persistent settings
+- **yt-dlp update** — Update the engine from the CLI
+- **FFmpeg check** — Detect FFmpeg and show install guide
+- **Interactive menu** — Numbered selection interface
+- **Progress bars** — Speed, ETA, file size, percentage
 
-## التنصيب
+## Requirements
 
-### المتطلبات
+- Python 3.8+
+- [FFmpeg](https://ffmpeg.org/) (required for audio extraction & format conversion)
 
-- Python 3.8 أو أحدث
-- [FFmpeg](https://ffmpeg.org/) (مطلوب لاستخراج الصوت وتحويل الصيغ)
-
-### تحميل سريع (ملف واحد)
+## Quick start
 
 ```bash
 git clone https://github.com/Badr1Alanzi/novadl.git
@@ -40,209 +35,111 @@ cd novadl
 python run.py
 ```
 
-### عبر Poetry
+## Usage
 
-```bash
-pip install poetry
-git clone https://github.com/Badr1Alanzi/novadl.git
-cd novadl
-poetry install
-poetry run novadl
-```
-
-## الاستخدام
-
-### الواجهة التفاعلية
-
-شغّل الملف بدون أي أمر لفتح القائمة التفاعلية:
+### Interactive menu
 
 ```bash
 python run.py
 ```
 
-ستظهر لك قائمة اختار منها رقم المنصة، ثم نوع التحميل (فيديو أو صوت)، أدخل الرابط، واختر الجودة.
+Select a platform by number, choose video or audio, enter the URL, pick quality, and download.
 
-### أوامر سطر الأوامر المباشرة
+### Direct commands
 
 ```bash
-# تحميل فيديو
 python run.py download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-
-# تحميل صوت فقط
 python run.py audio "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-
-# عرض معلومات
 python run.py info "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-
-# تحديث yt-dlp
 python run.py update
-
-# عرض الإعدادات
 python run.py config
-
-# عرض سجل التحميل
+python run.py version
 python run.py history
-
-# مسح السجل
 python run.py clear-history
-
-# تشخيص النظام
 python run.py doctor
 ```
 
-> **ملاحظة:** بعد تنصيب الأداة عبر Poetry، استخدم `novadl` بدل `python run.py`.
+### Options
 
-### خيارات التحميل
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--output-dir` | `-o` | Output directory |
+| `--quality` | `-q` | Video quality |
+| `--format` | `-f` | Output format (mp4, mkv, webm) |
+| `--audio-only` | `-a` | Audio only |
+| `--audio-format` | | Audio format |
+| `--audio-quality` | | Audio quality in kbps |
+| `--subtitles` | `-s` | Download subtitles |
+| `--sub-langs` | | Language codes (comma separated) |
+| `--embed-subs` | | Embed subtitles |
+| `--thumbnail` | `-t` | Write thumbnail |
+| `--cookies` | `-c` | Cookies file path |
+| `--proxy` | `-p` | Proxy URL |
 
-| الخيار | الاختصار | الوصف |
-|--------|----------|-------|
-| `--output-dir` | `-o` | مجلد الحفظ |
-| `--quality` | `-q` | جودة الفيديو |
-| `--format` | `-f` | صيغة المخرج |
-| `--audio-only` | `-a` | تحميل الصوت فقط |
-| `--audio-format` | | صيغة الصوت |
-| `--audio-quality` | | جودة الصوت |
-| `--subtitles` | `-s` | تحميل الترجمة |
-| `--sub-langs` | | رموز لغات الترجمة |
-| `--embed-subs` | | دمج الترجمة |
-| `--thumbnail` | `-t` | حفظ الصورة المصغرة |
-| `--cookies` | `-c` | مسار ملف الكوكيز |
-| `--proxy` | `-p` | رابط البروكسي |
+## Commands
 
-## الأوامر
+| Command | Description |
+|---------|-------------|
+| `python run.py download <url>` | Download video |
+| `python run.py audio <url>` | Download audio only |
+| `python run.py info <url>` | Show media information |
+| `python run.py update` | Update yt-dlp |
+| `python run.py config [key] [val]` | View or set configuration |
+| `python run.py version` | Show version info |
+| `python run.py history` | Show download history |
+| `python run.py clear-history` | Clear history |
+| `python run.py doctor` | System diagnosis |
 
-| الأمر | الوصف |
-|-------|-------|
-| `python run.py download <url>` | تحميل فيديو مع خيارات الجودة والصيغة والترجمة |
-| `python run.py audio <url>` | تحميل صوت فقط (MP3, M4A, Opus, FLAC, WAV) |
-| `python run.py info <url>` | عرض معلومات مفصلة عن رابط وسائط |
-| `python run.py update` | تحديث yt-dlp لأحدث إصدار |
-| `python run.py config [key] [value]` | عرض أو تعديل الإعدادات |
-| `python run.py version` | عرض معلومات الإصدار |
-| `python run.py history` | عرض سجل التحميل |
-| `python run.py clear-history` | مسح سجل التحميل |
-| `python run.py doctor` | تشخيص النظام (yt-dlp, FFmpeg) |
+## Config
 
-## المنصات المدعومة
-
-- Windows 10 / 11
-- macOS 12+
-- Linux (أي توزيعة مع Python 3.12+)
-
-## المواقع المدعومة
-
-جميع المواقع التي يدعمها yt-dlp، ومنها:
-
-YouTube، YouTube Music، YouTube Shorts، TikTok، Instagram، Facebook، X (Twitter)، Vimeo، Reddit، Twitch، SoundCloud، Dailymotion، Bilibili، Niconico، والمئات غيرها.
-
-للقائمة الكاملة: [مواقع yt-dlp المدعومة](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-
-## الإعدادات
-
-تُحفظ الإعدادات في `~/.config/novadl/config.json`.
-
-### عرض جميع الإعدادات
+Stored in `~/.config/novadl/config.json`.
 
 ```bash
-python run.py config
+python run.py config                        # view all
+python run.py config output_dir             # view one key
+python run.py config output_dir "~/Videos"  # set a value
 ```
 
-### عرض إعداد معين
+| Key | Default | Description |
+|-----|---------|-------------|
+| `output_dir` | `~/Videos/NovaDL` | Download directory |
+| `proxy` | — | Default proxy |
+| `cookies` | — | Default cookies file |
+| `audio_format` | `mp3` | Default audio format |
+| `audio_quality` | `192` | Default audio quality (kbps) |
 
-```bash
-python run.py config output_dir
-```
-
-### تعيين قيمة
-
-```bash
-python run.py config output_dir "~/Videos/NovaDL"
-```
-
-### مفاتيح الإعدادات
-
-| المفتاح | الوصف | القيمة الافتراضية |
-|---------|-------|-------------------|
-| `output_dir` | مسار الحفظ الافتراضي | `~/Videos/NovaDL` |
-| `proxy` | رابط البروكسي الافتراضي | — |
-| `cookies` | مسار ملف الكوكيز الافتراضي | — |
-| `audio_format` | صيغة الصوت الافتراضية | `mp3` |
-| `audio_quality` | جودة الصوت الافتراضية | `192` |
-
-## الأسئلة الشائعة
-
-**س: هل أحتاج FFmpeg؟**
-
-ج: FFmpeg مطلوب لاستخراج الصوت وتحويل الصيغ. إذا كنت تحمّل فيديو بصيغته الأصلية فقط، فهو اختياري.
-
-**س: كيف أثبت FFmpeg؟**
-
-ج: شغّل `python run.py doctor` لتعليمات التنصيب حسب نظامك.
-
-**س: هل يعمل على Windows؟**
-
-ج: نعم. NovaDL مدعوم بالكامل على Windows وmacOS وLinux.
-
-**س: هل يمكن تحميل فيديوهات يوتيوب خاصة؟**
-
-ج: نعم، بتوفير ملف كوكيز عبر الخيار `--cookies`.
-
-**س: كيف أحدث yt-dlp؟**
-
-ج: شغّل `python run.py update`.
-
-## هيكل المشروع
+## Project structure
 
 ```
-src/novadl/
-├── cli/              # أوامر Typer والقائمة التفاعلية
-├── core/             # منطق المجال (كيانات، حالات استخدام، واجهات)
-│   ├── entities/     # نماذج البيانات
-│   ├── use_cases/    # منطق الأعمال
-│   └── interfaces/   # واجهات مجردة
-├── infrastructure/   # التكامل مع الخارج
-│   ├── downloader/   # تكامل yt-dlp
-│   ├── config/       # إدارة الإعدادات
-│   ├── history/      # سجل التحميل
-│   └── system/       # أدوات النظام
-├── presentation/     # واجهة المستخدم (Rich)
-└── utils/            # أدوات مشتركة
+novadl/
+├── run.py            # Single entry point
+├── pyproject.toml
+├── README.md
+├── LICENSE
+└── src/novadl/
+    ├── __init__.py   # Version info
+    ├── const.py      # Constants, exceptions, logger
+    ├── core.py       # Entities, interfaces, use cases
+    ├── infra.py      # yt-dlp, config, history, ffmpeg
+    ├── ui.py         # Rich terminal UI
+    └── cli.py        # Commands + interactive menu + app
 ```
 
-## التطوير
+## FAQ
 
-```bash
-# تنصيب الاعتماديات
-poetry install
+**Q: Do I need FFmpeg?**
+A: Yes for audio extraction and format conversion. Run `python run.py doctor` for install instructions.
 
-# تشغيل الفحص
-poetry run ruff check src/
+**Q: Can I download private videos?**
+A: Yes, use `--cookies` with a cookies file from your browser.
 
-# تشغيل التنسيق
-poetry run black src/ tests/
+**Q: Supported platforms?**
+A: Windows, macOS, Linux.
 
-# تشغيل فحص الأنواع
-poetry run mypy src/
+## License
 
-# تشغيل الاختبارات
-poetry run pytest
-```
+MIT — see [LICENSE](LICENSE).
 
-## المساهمة
+## Developer
 
-اقرأ [CONTRIBUTING.md](CONTRIBUTING.md) للتفاصيل عن كيفية المساهمة.
-
-## الترخيص
-
-هذا المشروع مرخص تحت رخصة MIT — راجع [LICENSE](LICENSE) للمزيد.
-
-## المطور
-
-**بدر العنزي**
-
-- GitHub: [@Badr1Alanzi](https://github.com/Badr1Alanzi)
-- X: [@B5d2z](https://x.com/B5d2z)
-
-## الشكر
-
-NovaDL يعتمد على [yt-dlp](https://github.com/yt-dlp/yt-dlp) وجميع المساهمين فيه.
+**Badr Alanzi** — [GitHub](https://github.com/Badr1Alanzi) | [X](https://x.com/B5d2z)
