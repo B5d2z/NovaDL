@@ -30,7 +30,7 @@
 ## التشغيل السريع
 
 ```bash
-git clone https://github.com/B5d2z/novadl.git
+git clone https://github.com/B5d2z/NovaDL.git
 cd novadl
 python run.py
 ```

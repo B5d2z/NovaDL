@@ -9,9 +9,9 @@ description = "A powerful CLI downloader for video and audio from YouTube, TikTo
 authors = ["B5t Alanzi <badr@alanzi.dev>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/B5d2z/novadl"
-repository = "https://github.com/B5d2z/novadl"
-documentation = "https://github.com/B5d2z/novadl#readme"
+homepage = "https://github.com/B5d2z/NovaDL"
+repository = "https://github.com/B5d2z/NovaDL"
+documentation = "https://github.com/B5d2z/NovaDL#readme"
 keywords = [
     "downloader",
     "video-downloader",

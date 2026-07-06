@@ -6,7 +6,7 @@ from typing import Optional
 APP_NAME = "NovaDL"
 APP_VERSION = "1.0.0"
 APP_AUTHOR = "B5t Alanzi"
-APP_GITHUB = "https://github.com/B5d2z/novadl"
+APP_GITHUB = "https://github.com/B5d2z/NovaDL"
 APP_X = "@B5d2z"
 
 CONFIG_DIR = Path.home() / ".config" / "novadl"
