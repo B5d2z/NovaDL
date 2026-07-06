@@ -17,7 +17,7 @@ from novadl.presentation.display import show_welcome
 
 app = typer.Typer(
     name="novadl",
-    help="A powerful CLI downloader for video and audio from the internet.",
+    help="NovaDL - أداة تحميل فيديوهات وصوت من الإنترنت من سطر الأوامر.",
     no_args_is_help=True,
     rich_markup_mode="rich",
     pretty_exceptions_show_locals=False,
