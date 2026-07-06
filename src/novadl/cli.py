@@ -189,7 +189,19 @@ def _change_path() -> None:
     console.print(f"[success]✓ Save path set: {r}[/success]")
 
 
-def _choose_quality() -> str:
+def _choose_quality(audio_only: bool = False) -> tuple[str, str]:
+    """Returns (quality_format, audio_quality_kbps) tuple."""
+    if audio_only:
+        t = Table(box=None, show_header=False)
+        t.add_column("#", style="dim")
+        t.add_column("Audio Quality")
+        opts = ["Best", "128k", "192k", "256k", "320k"]
+        for i, q in enumerate(opts, 1):
+            t.add_row(str(i), q)
+        console.print(t)
+        m = {"1": "0", "2": "128", "3": "192", "4": "256", "5": "320"}
+        aq = m.get(Prompt.ask("[cyan]Choose audio quality[/cyan]", default="1"), "0")
+        return "best", aq
     t = Table(box=None, show_header=False)
     t.add_column("#", style="dim")
     t.add_column("Quality")
@@ -197,17 +209,19 @@ def _choose_quality() -> str:
         t.add_row(str(i), q)
     console.print(t)
     m = {"1": "best", "2": "bestvideo[height<=1080]+bestaudio/best[height<=1080]", "3": "bestvideo[height<=720]+bestaudio/best[height<=720]", "4": "bestvideo[height<=480]+bestaudio/best[height<=480]", "5": "bestvideo[height<=360]+bestaudio/best[height<=360]", "6": "worst"}
-    return m.get(Prompt.ask("[cyan]Choose quality[/cyan]", default="1"), "best")
+    q = m.get(Prompt.ask("[cyan]Choose quality[/cyan]", default="1"), "best")
+    return q, "192"
 
 
 def _dl_interactive(url: str, audio_only: bool = False) -> None:
     d = _get_dl_dir()
     d.mkdir(parents=True, exist_ok=True)
-    q = _choose_quality()
+    q, aq = _choose_quality(audio_only)
+    af = _config.get("audio_format", "mp3") if audio_only else "mp3"
     try:
         with create_progress() as p:
             t = p.add_task("[cyan]Downloading...[/cyan]", total=None)
-            r = _download_uc.execute_single(url=url, output_dir=d, quality=q, audio_only=audio_only, audio_format=_config.get("audio_format", "mp3"), audio_quality=_config.get("audio_quality", "192"), progress_callback=make_progress_hook(p, t))
+            r = _download_uc.execute_single(url=url, output_dir=d, quality=q, audio_only=audio_only, audio_format=af, audio_quality=aq, progress_callback=make_progress_hook(p, t))
         show_download_result(r)
     except NovaDLError as e:
         console.print(f"[error]Error:[/error] {e}")
