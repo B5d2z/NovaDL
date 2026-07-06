@@ -1,6 +1,6 @@
 # NovaDL
 
-أداة تحميل فيديوهات وصوت من الإنترنت. تدعم YouTube، TikTok، Instagram، Facebook، X (Twitter)، Vimeo، Reddit، Twitch، SoundCloud، وأكثر من 1000 موقع آخر.
+أداة تحميل فيديوهات وصوت من الإنترنت. تدعم YouTube، TikTok، Instagram، Facebook، X (Twitter)، Vimeo، Reddit، Twitch، SoundCloud، وأكثر من [1000 موقع](SUPPORTED_SITES.md).
 
 مبنية على [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
@@ -37,27 +37,13 @@ python run.py
 
 ## الاستخدام
 
-### القائمة التفاعلية
+شغّل الملف وستظهر لك قائمة تفاعلية:
 
 ```bash
 python run.py
 ```
 
 اختر رقم المنصة، فيديو أو صوت، أدخل الرابط، اختر الجودة.
-
-### أوامر مباشرة
-
-```bash
-python run.py download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-python run.py audio "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-python run.py info "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-python run.py update
-python run.py config
-python run.py version
-python run.py history
-python run.py clear-history
-python run.py doctor
-```
 
 ### الخيارات
 
@@ -75,20 +61,6 @@ python run.py doctor
 | `--thumbnail` | `-t` | الصورة المصغرة |
 | `--cookies` | `-c` | مسار ملف الكوكيز |
 | `--proxy` | `-p` | رابط البروكسي |
-
-## الأوامر
-
-| الأمر | الوصف |
-|-------|-------|
-| `python run.py download <url>` | تحميل فيديو |
-| `python run.py audio <url>` | تحميل صوت فقط |
-| `python run.py info <url>` | عرض معلومات الوسائط |
-| `python run.py update` | تحديث yt-dlp |
-| `python run.py config [key] [val]` | عرض أو تعيين إعداد |
-| `python run.py version` | معلومات الإصدار |
-| `python run.py history` | سجل التحميل |
-| `python run.py clear-history` | مسح السجل |
-| `python run.py doctor` | تشخيص النظام |
 
 ## الإعدادات
 
@@ -125,6 +97,10 @@ novadl/
     └── cli.py        # الأوامر + القائمة التفاعلية + التطبيق
 ```
 
+## المساهمة
+
+نرحب بالمساهمات! إذا عندك فكرة أو وجدت مشكلة، افتح Issue أو Pull Request.
+
 ## الأسئلة الشائعة
 
 **س: هل أحتاج FFmpeg؟**
@@ -136,10 +112,14 @@ novadl/
 **س: المنصات المدعومة؟**
 ج: Windows، macOS، Linux.
 
+## المواقع المدعومة
+
+لائحة بجميع المواقع: [SUPPORTED_SITES.md](SUPPORTED_SITES.md)
+
 ## الترخيص
 
 MIT — راجع [LICENSE](LICENSE).
 
 ## المطور
 
-**بدر العنزي** — [GitHub](https://github.com/Badr1Alanzi) | [X](https://x.com/B5d2z)
+**B5t Alanzi** — [GitHub](https://github.com/Badr1Alanzi) | [X](https://x.com/B5d2z)

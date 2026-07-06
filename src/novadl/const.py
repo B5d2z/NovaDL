@@ -5,7 +5,7 @@ from typing import Optional
 
 APP_NAME = "NovaDL"
 APP_VERSION = "1.0.0"
-APP_AUTHOR = "Badr Alanzi"
+APP_AUTHOR = "B5t Alanzi"
 APP_GITHUB = "https://github.com/Badr1Alanzi/novadl"
 APP_X = "@B5d2z"
 
