@@ -1,0 +1,27 @@
+* text=auto eol=lf
+
+*.py text diff=python
+*.md text
+*.toml text
+*.yml text
+*.yaml text
+*.json text
+*.cfg text
+*.ini text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.mkv binary
+*.webm binary
+*.mp3 binary
+*.aac binary
+
+.gitattributes export-ignore
+.gitignore export-ignore
+.editorconfig export-ignore
+.github export-ignore
+tests export-ignore

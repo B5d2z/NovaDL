@@ -1,0 +1,81 @@
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "novadl"
+version = "1.0.0"
+description = "A powerful CLI downloader for video and audio from YouTube, TikTok, Instagram, and hundreds of other sites."
+authors = ["Badr Alanzi <badr@alanzi.dev>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/Badr1Alanzi/novadl"
+repository = "https://github.com/Badr1Alanzi/novadl"
+documentation = "https://github.com/Badr1Alanzi/novadl#readme"
+keywords = [
+    "downloader",
+    "video-downloader",
+    "audio-downloader",
+    "youtube-downloader",
+    "yt-dlp",
+    "tiktok-downloader",
+    "instagram-downloader",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Utilities",
+]
+
+[tool.poetry.scripts]
+novadl = "novadl.cli.app:main"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.15.0"
+rich = "^13.9.0"
+yt-dlp = "^2024.12.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.0"
+black = "^24.10.0"
+pytest = "^8.3.0"
+pytest-cov = "^6.0.0"
+mypy = "^1.13.0"
+pre-commit = "^4.0.0"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = ["__pycache__", ".git", "dist", "build"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "N", "UP", "S", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --cov=src/novadl --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+exclude = ["tests"]
