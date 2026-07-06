@@ -40,10 +40,10 @@ classifiers = [
 novadl = "novadl.cli.app:main"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-typer = "^0.15.0"
-rich = "^13.9.0"
-yt-dlp = "^2024.12.0"
+python = ">=3.8"
+typer = ">=0.9.0"
+rich = ">=13.0.0"
+yt-dlp = ">=2024.12.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.0"
@@ -54,7 +54,7 @@ mypy = "^1.13.0"
 pre-commit = "^4.0.0"
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py38"
 line-length = 100
 exclude = ["__pycache__", ".git", "dist", "build"]
 
@@ -66,7 +66,7 @@ quote-style = "double"
 
 [tool.black]
 line-length = 100
-target-version = ["py312"]
+target-version = ["py38"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -75,7 +75,7 @@ python_functions = ["test_*"]
 addopts = "-v --cov=src/novadl --cov-report=term-missing"
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.8"
 strict = true
 ignore_missing_imports = true
 exclude = ["tests"]

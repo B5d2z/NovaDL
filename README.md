@@ -29,31 +29,35 @@
 
 ### المتطلبات
 
-- Python 3.12 أو أحدث
+- Python 3.8 أو أحدث
 - [FFmpeg](https://ffmpeg.org/) (مطلوب لاستخراج الصوت وتحويل الصيغ)
 
-### عبر pip
+### تحميل سريع (ملف واحد)
 
 ```bash
-pip install novadl
+git clone https://github.com/Badr1Alanzi/novadl.git
+cd novadl
+python novadl.py
 ```
 
 ### عبر Poetry
 
 ```bash
+pip install poetry
 git clone https://github.com/Badr1Alanzi/novadl.git
 cd novadl
 poetry install
+poetry run novadl
 ```
 
 ## الاستخدام
 
 ### الواجهة التفاعلية
 
-شغّل الأداة بدون أي أمر لفتح القائمة التفاعلية:
+شغّل الملف بدون أي أمر لفتح القائمة التفاعلية:
 
 ```bash
-novadl
+python novadl.py
 ```
 
 ستظهر لك قائمة اختار منها رقم المنصة، ثم نوع التحميل (فيديو أو صوت)، أدخل الرابط، واختر الجودة.
@@ -62,29 +66,31 @@ novadl
 
 ```bash
 # تحميل فيديو
-novadl download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+python novadl.py download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 # تحميل صوت فقط
-novadl audio "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+python novadl.py audio "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 # عرض معلومات
-novadl info "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+python novadl.py info "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 # تحديث yt-dlp
-novadl update
+python novadl.py update
 
 # عرض الإعدادات
-novadl config
+python novadl.py config
 
 # عرض سجل التحميل
-novadl history
+python novadl.py history
 
 # مسح السجل
-novadl clear-history
+python novadl.py clear-history
 
 # تشخيص النظام
-novadl doctor
+python novadl.py doctor
 ```
+
+> **ملاحظة:** بعد تنصيب الأداة عبر Poetry، استخدم `novadl` بدل `python novadl.py`.
 
 ### خيارات التحميل
 
@@ -107,15 +113,15 @@ novadl doctor
 
 | الأمر | الوصف |
 |-------|-------|
-| `novadl download <url>` | تحميل فيديو مع خيارات الجودة والصيغة والترجمة |
-| `novadl audio <url>` | تحميل صوت فقط (MP3, M4A, Opus, FLAC, WAV) |
-| `novadl info <url>` | عرض معلومات مفصلة عن رابط وسائط |
-| `novadl update` | تحديث yt-dlp لأحدث إصدار |
-| `novadl config [key] [value]` | عرض أو تعديل الإعدادات |
-| `novadl version` | عرض معلومات الإصدار |
-| `novadl history` | عرض سجل التحميل |
-| `novadl clear-history` | مسح سجل التحميل |
-| `novadl doctor` | تشخيص النظام (yt-dlp, FFmpeg) |
+| `python novadl.py download <url>` | تحميل فيديو مع خيارات الجودة والصيغة والترجمة |
+| `python novadl.py audio <url>` | تحميل صوت فقط (MP3, M4A, Opus, FLAC, WAV) |
+| `python novadl.py info <url>` | عرض معلومات مفصلة عن رابط وسائط |
+| `python novadl.py update` | تحديث yt-dlp لأحدث إصدار |
+| `python novadl.py config [key] [value]` | عرض أو تعديل الإعدادات |
+| `python novadl.py version` | عرض معلومات الإصدار |
+| `python novadl.py history` | عرض سجل التحميل |
+| `python novadl.py clear-history` | مسح سجل التحميل |
+| `python novadl.py doctor` | تشخيص النظام (yt-dlp, FFmpeg) |
 
 ## المنصات المدعومة
 
@@ -138,19 +144,19 @@ YouTube، YouTube Music، YouTube Shorts، TikTok، Instagram، Facebook، X (Tw
 ### عرض جميع الإعدادات
 
 ```bash
-novadl config
+python novadl.py config
 ```
 
 ### عرض إعداد معين
 
 ```bash
-novadl config output_dir
+python novadl.py config output_dir
 ```
 
 ### تعيين قيمة
 
 ```bash
-novadl config output_dir "~/Videos/NovaDL"
+python novadl.py config output_dir "~/Videos/NovaDL"
 ```
 
 ### مفاتيح الإعدادات
@@ -171,7 +177,7 @@ novadl config output_dir "~/Videos/NovaDL"
 
 **س: كيف أثبت FFmpeg؟**
 
-ج: شغّل `novadl doctor` لتعليمات التنصيب حسب نظامك.
+ج: شغّل `python novadl.py doctor` لتعليمات التنصيب حسب نظامك.
 
 **س: هل يعمل على Windows؟**
 
@@ -183,7 +189,7 @@ novadl config output_dir "~/Videos/NovaDL"
 
 **س: كيف أحدث yt-dlp؟**
 
-ج: شغّل `novadl update`.
+ج: شغّل `python novadl.py update`.
 
 ## هيكل المشروع
 
