@@ -1,7 +1,6 @@
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
 
 APP_NAME = "NovaDL"
 APP_VERSION = "1.0.0"

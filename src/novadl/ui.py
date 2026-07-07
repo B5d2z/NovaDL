@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional, Union
 
 from rich import box
 from rich.console import Console
@@ -22,7 +23,7 @@ def show_welcome() -> None:
     console.print(Panel(text, border_style="cyan"))
 
 
-def show_info(info: MediaInfo | PlaylistInfo) -> None:
+def show_info(info: Union[MediaInfo, PlaylistInfo]) -> None:
     if isinstance(info, PlaylistInfo):
         _show_playlist(info)
     else:
@@ -111,7 +112,7 @@ def show_config(data: dict[str, str]) -> None:
     console.print()
 
 
-def show_diagnosis(ffmpeg_installed: bool, ffmpeg_version: str | None, yt_dlp_version: str) -> None:
+def show_diagnosis(ffmpeg_installed: bool, ffmpeg_version: Optional[str], yt_dlp_version: str) -> None:
     t = Table(box=box.ROUNDED, title="System Diagnosis", title_style="bold cyan")
     t.add_column("Component", style="cyan")
     t.add_column("Status", style="bold")
@@ -131,9 +132,11 @@ def create_progress() -> Progress:
 def make_progress_hook(progress: Progress, task_id: int):
     def hook(d: dict) -> None:
         if d["status"] == "downloading":
-            progress.update(task_id, completed=d.get("downloaded_bytes", 0), total=d.get("total_bytes") or d.get("total_bytes_estimate", 0))
+            total = d.get("total_bytes") or d.get("total_bytes_estimate") or 0
+            progress.update(task_id, completed=d.get("downloaded_bytes", 0), total=total)
         elif d["status"] == "finished":
-            progress.update(task_id, completed=d.get("total_bytes", 0))
+            total = d.get("total_bytes") or 0
+            progress.update(task_id, completed=total)
     return hook
 
 

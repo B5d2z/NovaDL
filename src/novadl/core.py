@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 from novadl.const import DEFAULT_DOWNLOAD_DIR, DownloadError, logger
 
@@ -34,7 +34,8 @@ class MediaInfo:
     def duration_str(self) -> str:
         if self.duration is None:
             return "N/A"
-        minutes, seconds = divmod(self.duration, 60)
+        total = int(self.duration)
+        minutes, seconds = divmod(total, 60)
         hours, minutes = divmod(minutes, 60)
         if hours:
             return f"{hours}:{minutes:02d}:{seconds:02d}"
@@ -69,6 +70,7 @@ class MediaRequest:
     subtitle_langs: Optional[list[str]] = None
     embed_subs: bool = False
     write_thumbnail: bool = False
+    output_format: Optional[str] = None
     cookies_file: Optional[Path] = None
     proxy_url: Optional[str] = None
     resume: bool = True
@@ -88,7 +90,7 @@ class DownloadResult:
 
 class DownloaderInterface(ABC):
     @abstractmethod
-    def extract_info(self, url: str, playlist: bool = False) -> MediaInfo | PlaylistInfo: ...
+    def extract_info(self, url: str, playlist: bool = False) -> Union[MediaInfo, PlaylistInfo]: ...
 
     @abstractmethod
     def download(self, request: MediaRequest, progress_callback: Optional[Callable] = None) -> DownloadResult: ...
@@ -141,7 +143,7 @@ class DownloadUseCase:
         output_dir = output_dir.resolve()
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        request = MediaRequest(url=url, output_dir=output_dir, audio_only=audio_only, audio_format=audio_format, audio_quality=audio_quality, subtitles=subtitles, subtitle_langs=subtitle_langs, embed_subs=embed_subs, write_thumbnail=write_thumbnail, cookies_file=cookies_file, proxy_url=proxy_url)
+        request = MediaRequest(url=url, output_dir=output_dir, quality=quality or "best", audio_only=audio_only, audio_format=audio_format, audio_quality=audio_quality, output_format=output_format, subtitles=subtitles, subtitle_langs=subtitle_langs, embed_subs=embed_subs, write_thumbnail=write_thumbnail, cookies_file=cookies_file, proxy_url=proxy_url)
         try:
             logger.info("Starting download: %s", url)
             result = self._downloader.download(request, progress_callback)
@@ -156,7 +158,7 @@ class ExtractInfoUseCase:
     def __init__(self, downloader: DownloaderInterface) -> None:
         self._downloader = downloader
 
-    def execute(self, url: str) -> MediaInfo | PlaylistInfo:
+    def execute(self, url: str) -> Union[MediaInfo, PlaylistInfo]:
         return self._downloader.extract_info(url)
 
 

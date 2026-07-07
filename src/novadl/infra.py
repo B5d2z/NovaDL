@@ -3,11 +3,11 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Union
 
 import yt_dlp
 
-from novadl.const import CONFIG_DIR, CONFIG_FILE, ExtractionError, HISTORY_FILE, MAX_HISTORY_ENTRIES, logger
+from novadl.const import CONFIG_DIR, CONFIG_FILE, HISTORY_FILE, ExtractionError, MAX_HISTORY_ENTRIES, logger
 from novadl.core import (
     ConfigRepositoryInterface,
     DownloadResult,
@@ -18,11 +18,10 @@ from novadl.core import (
     MediaType,
     PlaylistInfo,
 )
-from novadl.const import ExtractionError
 
 
 class YtDlpDownloader(DownloaderInterface):
-    def extract_info(self, url: str, playlist: bool = False) -> MediaInfo | PlaylistInfo:
+    def extract_info(self, url: str, playlist: bool = False) -> Union[MediaInfo, PlaylistInfo]:
         opts: dict[str, Any] = {"quiet": True, "no_warnings": True, "extract_flat": False}
         if not playlist:
             opts["playlist_items"] = "1"
@@ -36,8 +35,14 @@ class YtDlpDownloader(DownloaderInterface):
             raise ExtractionError(str(e)) from e
 
     def download(self, request: MediaRequest, progress_callback: Optional[Callable] = None) -> DownloadResult:
+        if request.output_format:
+            ext = request.output_format
+        elif request.audio_only:
+            ext = request.audio_format
+        else:
+            ext = "mp4"
         opts: dict[str, Any] = {
-            "outtmpl": str(request.output_dir / request.filename_template) if request.output_dir else request.filename_template,
+            "outtmpl": str(request.output_dir / f"%(title)s.{ext}"),
             "quiet": True, "no_warnings": True, "continuedl": request.resume,
         }
         if request.audio_only:
@@ -63,7 +68,13 @@ class YtDlpDownloader(DownloaderInterface):
         try:
             with yt_dlp.YoutubeDL(opts) as ydl:
                 raw = ydl.extract_info(request.url, download=True)
-            file_path = request.output_dir / f"{yt_dlp.utils.sanitize_filename(raw.get('title', 'Unknown'))}." + (request.audio_format if request.audio_only else "mp4") if request.output_dir else Path(f"{raw.get('title', 'Unknown')}.mp4")
+            title = yt_dlp.utils.sanitize_filename(raw.get("title", "Unknown"))
+            file_path = request.output_dir / f"{title}.{ext}"
+            if not file_path.exists():
+                for f in request.output_dir.iterdir():
+                    if f.stem == title:
+                        file_path = f
+                        break
             return DownloadResult(url=request.url, title=raw.get("title", "Unknown"), file_path=file_path, media_type=request.media_type, file_size=file_path.stat().st_size if file_path.exists() else 0, duration=raw.get("duration"))
         except yt_dlp.utils.DownloadError as e:
             return DownloadResult(url=request.url, title="Unknown", file_path=Path(), media_type=request.media_type, file_size=0, success=False, error_message=str(e))
@@ -82,14 +93,16 @@ class YtDlpDownloader(DownloaderInterface):
         except Exception:
             return "unknown"
 
-    def _parse(self, raw: dict[str, Any], url: str) -> MediaInfo | PlaylistInfo:
+    def _parse(self, raw: dict[str, Any], url: str) -> Union[MediaInfo, PlaylistInfo]:
         if raw.get("_type") == "playlist" or "entries" in raw:
             entries = [self._build_info(e, e.get("webpage_url", url)) for e in (raw.get("entries") or []) if e]
             return PlaylistInfo(title=raw.get("title", "Untitled"), url=url, entries=entries, uploader=raw.get("uploader"), entry_count=len(entries), webpage_url=raw.get("webpage_url", url), extractor=raw.get("extractor"), original_json=raw)
         return self._build_info(raw, url)
 
     def _build_info(self, raw: dict[str, Any], url: str) -> MediaInfo:
-        return MediaInfo(url=url, title=raw.get("title", "Unknown"), media_type=MediaType.VIDEO, duration=raw.get("duration"), uploader=raw.get("uploader"), upload_date=raw.get("upload_date"), description=raw.get("description"), thumbnail=raw.get("thumbnail"), webpage_url=raw.get("webpage_url", url), extractor=raw.get("extractor"), formats=raw.get("formats", []), subtitles=raw.get("subtitles", {}), original_json=raw)
+        is_audio = raw.get("extractor", "").lower() in ("soundcloud",) or raw.get("vcodec") == "none"
+        mt = MediaType.AUDIO if is_audio else MediaType.VIDEO
+        return MediaInfo(url=url, title=raw.get("title", "Unknown"), media_type=mt, duration=raw.get("duration"), uploader=raw.get("uploader"), upload_date=raw.get("upload_date"), description=raw.get("description"), thumbnail=raw.get("thumbnail"), webpage_url=raw.get("webpage_url", url), extractor=raw.get("extractor"), formats=raw.get("formats", []), subtitles=raw.get("subtitles", {}), original_json=raw)
 
 
 class ConfigManager(ConfigRepositoryInterface):

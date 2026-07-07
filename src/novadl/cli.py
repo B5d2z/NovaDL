@@ -7,7 +7,6 @@ from rich.panel import Panel
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
-from novadl import __version__
 from novadl.const import APP_AUTHOR, APP_GITHUB, APP_NAME, APP_VERSION, APP_X, NovaDLError
 from novadl.core import DownloadUseCase, ExtractInfoUseCase, UpdateUseCase
 from novadl.infra import ConfigManager, FFmpegChecker, HistoryManager, YtDlpDownloader
@@ -39,7 +38,12 @@ def _validate_url(url: str) -> str:
 
 
 def _resolve_output_dir(path: Optional[str]) -> Optional[Path]:
-    return Path(path).resolve() if path else None
+    if path is None:
+        return None
+    p = path.strip()
+    if not p:
+        return None
+    return Path(p).resolve()
 
 
 def _validate_cookies(path: Optional[str]) -> Optional[Path]:
@@ -57,7 +61,7 @@ def download(
     url: str = typer.Argument(..., help="URL of the video to download", callback=_validate_url),
     output_dir: Optional[str] = typer.Option(None, "--output-dir", "-o", help="Output directory", callback=_resolve_output_dir),
     quality: Optional[str] = typer.Option(None, "--quality", "-q", help="Video quality"),
-    format: Optional[str] = typer.Option(None, "--format", "-f", help="Output format (mp4, mkv, webm)"),
+    output_format: Optional[str] = typer.Option(None, "--format", "-f", help="Output format (mp4, mkv, webm)"),
     audio_only: bool = typer.Option(False, "--audio-only", "-a", help="Download audio only"),
     audio_format: str = typer.Option("mp3", "--audio-format", help="Audio format (mp3, m4a, opus, flac, wav)"),
     audio_quality: str = typer.Option("192", "--audio-quality", help="Audio quality in kbps"),
@@ -72,7 +76,8 @@ def download(
         with create_progress() as progress:
             task_id = progress.add_task(f"[cyan]Downloading:[/cyan] {url[:60]}", total=None)
             hook = make_progress_hook(progress, task_id)
-            result = _download_uc.execute_single(url=url, output_dir=output_dir, quality=quality, audio_only=audio_only, audio_format=audio_format, audio_quality=audio_quality, output_format=format, subtitles=subtitles, subtitle_langs=subtitle_langs.split(",") if subtitle_langs else None, embed_subs=embed_subs, write_thumbnail=write_thumbnail, cookies_file=cookies, proxy_url=proxy, progress_callback=hook)
+            langs = subtitle_langs.split(",") if subtitle_langs and subtitle_langs.strip() else None
+            result = _download_uc.execute_single(url=url, output_dir=output_dir, quality=quality, audio_only=audio_only, audio_format=audio_format, audio_quality=audio_quality, output_format=output_format, subtitles=subtitles, subtitle_langs=langs, embed_subs=embed_subs, write_thumbnail=write_thumbnail, cookies_file=cookies, proxy_url=proxy, progress_callback=hook)
         show_download_result(result)
     except NovaDLError as e:
         console.print(f"[error]Error:[/error] {e}")
@@ -250,7 +255,11 @@ def _platform_menu() -> None:
     if c == "14":
         console.print("[info]Goodbye![/info]"); sys.exit(0)
 
-    idx = int(c) - 1
+    try:
+        idx = int(c) - 1
+    except ValueError:
+        console.print("[error]Invalid number[/error]")
+        return
     if idx < 0 or idx >= len(PLATFORMS):
         console.print("[error]Invalid choice[/error]"); return
 
